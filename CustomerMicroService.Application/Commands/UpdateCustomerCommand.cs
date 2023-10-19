@@ -12,6 +12,6 @@ namespace CustomerMicroService.Application.Commands
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
-        public AddressViewModel Addresses { get; set; }
+        public AddressViewModel Address { get; set; }
     }
 }

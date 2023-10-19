@@ -2,10 +2,12 @@ using CustomerMicroService.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRegisterServices();
+builder.Services.AddApiConfiguration();
+builder.Services.AddRegisterServices(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

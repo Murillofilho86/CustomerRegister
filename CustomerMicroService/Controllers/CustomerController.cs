@@ -1,9 +1,15 @@
 ﻿using CustomerMicroService.Application.Commands;
 using CustomerMicroService.Application.Queries.Interfaces;
 using CustomerMicroService.Application.Requests;
+using CustomerMicroService.Data.Services;
+using CustomerMicroService.Data.Services.Responses;
+using CustomerMicroService.Framework.DomainObject;
 using CustomerMicroService.Framework.Result.Interface;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Net;
 
 namespace CustomerMicroService.API.Controllers
 {
@@ -32,7 +38,15 @@ namespace CustomerMicroService.API.Controllers
 
         [HttpPost(), Produces("application/json", Type = typeof(IApplicationResult<Guid>))]
         public async Task<IActionResult> PostCatalogo([FromBody] CreateCustomerCommand command)
-               => await _mediator.Send(command);
+        {
+            //if (command.IsValid())
+            //{
+            return await _mediator.Send(command);
+            //}
+
+            //return BadRequest(command);
+        }
+
 
 
         [HttpPut("{customerId:guid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
@@ -47,6 +61,25 @@ namespace CustomerMicroService.API.Controllers
         {
             command.CustomerId = customerId;
             return await _mediator.Send(command);
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet(@"find-address/{cep}")]
+        public async Task<ActionResult<DocumentInfo>> GetCompanyInfoAsync([FromServices] IBrasilApiService brasilApiService, string cep)
+        {
+
+            try
+            {
+                return await brasilApiService.GetDocumentInfoAsync(cep);
+            }
+            catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.BadRequest)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
+            ModelState.AddModelError(string.Empty, "cep inválido");
+            return BadRequest(ModelState);
         }
     }
 }

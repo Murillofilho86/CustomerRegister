@@ -11,6 +11,10 @@ namespace CustomerMicroService.Data.Repository
 
         protected DbSet<TEntity> Entity => Context.Set<TEntity>();
 
+        public SqlServerRepository()
+        {
+        }
+
         public SqlServerRepository(DbContext context)
         {
             Context = context;

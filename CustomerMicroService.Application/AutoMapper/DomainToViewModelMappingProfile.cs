@@ -9,6 +9,7 @@ namespace CustomerMicroService.Application.AutoMapper
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Customer, CustomerViewModel>();
+            CreateMap<Address, AddressViewModel>();
         }
     }
 }

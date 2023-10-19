@@ -1,23 +1,20 @@
-﻿using CustomerMicroService.Domain.Entities;
+﻿using CustomerMicroService.Data.Mapping;
+using CustomerMicroService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CustomerMicroService.Data.Context
 {
     public class CustomerContext : DbContext
     {
+        public CustomerContext(DbContextOptions<CustomerContext> options) : base(options) { }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Address> Address { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasKey(c => c.CustomerId);
-            modelBuilder.Entity<Address>().HasKey(a => a.AddressId);
-
-
-            modelBuilder.Entity<Customer>()
-                       .HasOne(c => c.Address);
-
+            modelBuilder.ApplyConfiguration(new CustomerMapping());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

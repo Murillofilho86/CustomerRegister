@@ -1,0 +1,2 @@
+Versão .Net 7
+VS 2022
