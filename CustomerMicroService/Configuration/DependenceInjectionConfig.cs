@@ -37,7 +37,8 @@ namespace CustomerMicroService.API.Configuration
       
 
             services.Configure<BrasilApiOptions>(configuration.GetSection("BrasilApi"));
-      
+
+
             services.AddHttpClient<IBrasilApiService, BrasilApiService>((serviceProvider, httpClient) =>
             {
                 var options = serviceProvider.GetService<IOptions<BrasilApiOptions>>();
@@ -49,9 +50,11 @@ namespace CustomerMicroService.API.Configuration
                     .HandleTransientHttpError()
                     .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));
 
+         
+
             services.AddScoped<ICustomerQuery, CustomerQuery>();
 
-            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
 
 
         }

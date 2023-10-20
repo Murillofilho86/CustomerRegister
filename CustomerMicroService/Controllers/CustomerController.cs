@@ -3,12 +3,9 @@ using CustomerMicroService.Application.Queries.Interfaces;
 using CustomerMicroService.Application.Requests;
 using CustomerMicroService.Data.Services;
 using CustomerMicroService.Data.Services.Responses;
-using CustomerMicroService.Framework.DomainObject;
 using CustomerMicroService.Framework.Result.Interface;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 using System.Net;
 
 namespace CustomerMicroService.API.Controllers
@@ -32,22 +29,13 @@ namespace CustomerMicroService.API.Controllers
          => await _query.GetByFilterAsync(request);
 
         [HttpGet("{customerId:guid}")]
-        public async Task<IActionResult> GetByUnidadeId([FromRoute] Guid customerId)
+        public async Task<IActionResult> GetById([FromRoute] Guid customerId)
           => await _query.GetByIdAsync(customerId);
 
 
         [HttpPost(), Produces("application/json", Type = typeof(IApplicationResult<Guid>))]
-        public async Task<IActionResult> PostCatalogo([FromBody] CreateCustomerCommand command)
-        {
-            //if (command.IsValid())
-            //{
-            return await _mediator.Send(command);
-            //}
-
-            //return BadRequest(command);
-        }
-
-
+        public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
+            => await _mediator.Send(command);
 
         [HttpPut("{customerId:guid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
         public async Task<IActionResult> Update([FromRoute] Guid customerId, [FromBody] UpdateCustomerCommand command)
@@ -57,15 +45,15 @@ namespace CustomerMicroService.API.Controllers
         }
 
         [HttpDelete("{customerId:guid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
-        public async Task<IActionResult> Delete([FromRoute] Guid customerId, [FromQuery] RemoveCustomerCommand command)
+        public async Task<IActionResult> Delete([FromRoute] Guid customerId, RemoveCustomerCommand command)
         {
             command.CustomerId = customerId;
             return await _mediator.Send(command);
         }
 
 
-        [AllowAnonymous]
-        [HttpGet(@"find-address/{cep}")]
+        
+        [HttpGet(@"Address/{cep}")]
         public async Task<ActionResult<DocumentInfo>> GetCompanyInfoAsync([FromServices] IBrasilApiService brasilApiService, string cep)
         {
 
