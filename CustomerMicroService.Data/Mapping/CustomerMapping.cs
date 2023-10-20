@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using CustomerMicroService.Domain.Entities;
-using System.Reflection.Emit;
 
 namespace CustomerMicroService.Data.Mapping
 {
@@ -16,27 +15,40 @@ namespace CustomerMicroService.Data.Mapping
             builder.Property(c => c.LastName).IsRequired();
 
             builder.Property(c => c.Cpf)
-                .HasMaxLength(14)
+                .HasMaxLength(11)
                 .IsUnicode(false)
                 .HasConversion<string>(v => v, v => v)
                 .IsRequired();
 
-            builder.Property(c => c.AddressId);
+            builder.HasOne(x => x.Address);
 
-            builder.OwnsOne(x => x.Address, ca =>
-            {
-                ca.Property(x => x.City).HasColumnName("City").HasMaxLength(80).IsUnicode(false).IsRequired();
-                ca.Property(x => x.Neighborhood).HasColumnName("Neighborhood").HasMaxLength(80).IsUnicode(false).IsRequired();
-                ca.Property(x => x.State).HasColumnName("State").HasMaxLength(80).IsUnicode(false).IsRequired();
-                ca.Property(x => x.Street).HasColumnName("Street").HasMaxLength(100).IsUnicode(false).IsRequired();
-                ca.Property(x => x.ZipCode).HasColumnName("ZipCode").HasMaxLength(9).IsUnicode(false).IsRequired();
-                ca.Property(x => x.Number).HasColumnName("Number").HasMaxLength(20).IsUnicode(false).IsRequired();
-                ca.Property(x => x.Complement).HasColumnName("Complement").HasMaxLength(20).IsUnicode(false);
 
-            });
-
-            builder.Property(c => c.CreatedAt).ValueGeneratedOnAdd();
             builder.Property(c => c.ModifiedIn).ValueGeneratedOnUpdate();
+
+            builder.Property(c => c.RowVersion).IsRowVersion();
         }
     }
 }
+// modelBuilder.Entity<Customer>()
+//     .ToTable("Customer")
+//      .HasKey(c => c.CustomerId);
+
+// modelBuilder.Entity<Customer>()
+//     .HasOne(c => c.Address);
+
+// modelBuilder.Entity<Customer>()
+//.Property(c => c.Cpf)
+//    .HasMaxLength(11)
+//     .IsUnicode(false)
+//     .HasConversion<string>(v => v, v => v)
+//     .IsRequired();
+
+// modelBuilder.Entity<Customer>()
+//     .Property(c => c.CreatedAt).ValueGeneratedOnAdd();
+
+// modelBuilder.Entity<Customer>()
+//     .Property(c => c.ModifiedIn).ValueGeneratedOnUpdate();
+
+// modelBuilder.Entity<Address>()
+//     .ToTable("Address")
+//     .HasKey(a => a.AddressId);

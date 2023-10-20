@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerMicroService.Application.Commands
 {
-    public class RemoveCustomerCommand : BaseActionRequest, IRequest<IActionResult>
+    public class RemoveCustomerCommand : BaseRequest, IRequest<IActionResult>
     {
         public Guid CustomerId { get; set; }
     }

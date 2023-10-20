@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CustomerMicroService.Core\CustomerMicroService.Framework.csproj" />
+    <ProjectReference Include="..\CustomerMicroService.Data\CustomerMicroService.Data.csproj" />
     <ProjectReference Include="..\CustomerMicroService.Domain\CustomerMicroService.Domain.csproj" />
   </ItemGroup>
 

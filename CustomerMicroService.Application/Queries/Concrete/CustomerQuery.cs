@@ -2,7 +2,6 @@
 using CustomerMicroService.Application.Queries.SQL;
 using CustomerMicroService.Application.Requests;
 using CustomerMicroService.Application.ViewModel;
-using CustomerMicroService.Domain.Entities;
 using CustomerMicroService.Framework.Result.Concrete;
 using CustomerMicroService.Framework.Result.Interface;
 using CustomerMicroService.Framework.ViewModel;
@@ -26,7 +25,6 @@ namespace CustomerMicroService.Application.Queries.Concrete
         {
             var result = new ApplicationResult<DadosPaginadosViewModel<CustomerViewModel>>();
 
-
             DynamicParameters parameters = new DynamicParameters();
 
             parameters.Add("@offset", (request.Page - 1) * request.PageSize, DbType.Int32, ParameterDirection.Input);
@@ -37,12 +35,22 @@ namespace CustomerMicroService.Application.Queries.Concrete
                 connection.Open();
 
                 var dadosPaginados = new DadosPaginadosViewModel<CustomerViewModel>(request);
-                using (var multi = await connection.QueryMultipleAsync(CustomerSql.GetByFilter, parameters))
-                {
-                    dadosPaginados.Registros = multi.Read<CustomerViewModel>().ToList();
-                    dadosPaginados.Controle.TotalRegistros = multi.ReadFirst<int>();
-                    result.Result = dadosPaginados;
-                }
+
+
+                var data = await connection.QueryAsync<CustomerViewModel, AddressViewModel, CustomerViewModel>(CustomerSql.GetByFilter,
+                  (customer, address) =>
+                  {
+
+                      customer.Address = address;
+                      return customer;
+                  },
+                  splitOn: "AddressId",
+                      param: parameters);
+
+                dadosPaginados.Registros = data.ToList();
+
+                dadosPaginados.Controle.TotalRegistros = data.Count();
+                result.Result = dadosPaginados;
 
                 connection.Close();
             }
@@ -60,19 +68,24 @@ namespace CustomerMicroService.Application.Queries.Concrete
             {
                 connection.Open();
 
-                CustomerViewModel customer;
-
-                using (var multi = await connection.QueryMultipleAsync(CustomerSql.GetById, parameters))
+                var data = await connection.QueryAsync<CustomerViewModel, AddressViewModel, CustomerViewModel>(CustomerSql.GetById,
+                (customer, address) =>
                 {
-                    customer = multi.Read<CustomerViewModel>().First();
-                    customer.Address = multi.Read<AddressViewModel>().First();
-                    result.Result =  customer;
-                }
+
+                    customer.Address = address;
+                    return customer;
+                },
+                splitOn: "AddressId",
+                    param: parameters);
+
+                result.Result = data.FirstOrDefault();
+
 
                 connection.Close();
             }
 
             return result;
         }
+
     }
 }

@@ -1,11 +1,12 @@
 ﻿
+using CustomerMicroService.Domain.Entities;
 using CustomerMicroService.Framework.DomainObject;
+using CustomerMicroService.Framework.Message;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerMicroService.Domain.Entities
 {
-    [Table("Customer")]
+ 
     public class Customer : EntityBase
     {
         public Customer(string firstName, string lastName, string email, string phone, Cpf cpf)
@@ -17,31 +18,23 @@ namespace CustomerMicroService.Domain.Entities
             Phone = phone;
             Cpf = cpf;
         }
+    
+ 
+        public Guid CustomerId { get; private set; }
 
-        [Key]
-        [Column("CustomerId")]
-        public Guid CustomerId { get; set; }
-
-        [Column("FirstName")]
         public string FirstName { get; private set; }
 
-        [Column("LastName")]
         public string LastName { get; private set; }
 
-        [Column("Email")]
         public string Email { get; private set; }
 
-        [Column("Phone")]
         public string Phone { get; private set; }
 
-        [Column("Cpf")]
-        public Cpf Cpf { get; set; }
+        public Cpf Cpf { get; private set; }
 
-        [Column("AddressId")]
-        public Guid AddressId { get; set; }
-
-     
-        public virtual Address Address { get; private set; }
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+        public Address Address { get; private set; } 
 
         public void AddAddress(Address address)
         {
@@ -49,13 +42,14 @@ namespace CustomerMicroService.Domain.Entities
             Address = new Address(address.Street, address.Number, address.Complement, address.Neighborhood, address.City, address.State, address.ZipCode);
         }
 
-        public void Update(string firstName, string lastName, string email, string phone)
+        public void Update(string firstName, string lastName, string email, string phone, Address address)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             Phone = phone;
-          
+            ModifiedIn = DateTime.Now;
+            //Address = 
         }
     }
 }

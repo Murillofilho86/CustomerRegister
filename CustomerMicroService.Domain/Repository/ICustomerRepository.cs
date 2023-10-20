@@ -2,10 +2,12 @@
 
 namespace CustomerMicroService.Domain.Repository
 {
-    public interface ICustomerRepository 
+    public interface ICustomerRepository
     {
         Task<Customer> GetByIdAsync(Guid customerId);
         Task<Customer> AddAsync(Customer customer);
-        void Delete(Customer customer);
+        bool Update(Customer customer);
+        bool Remove(Customer customer);
+        Task SaveAsync(Customer customer);
     }
 }

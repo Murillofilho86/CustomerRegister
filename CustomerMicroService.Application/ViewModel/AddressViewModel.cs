@@ -4,6 +4,7 @@ namespace CustomerMicroService.Application.ViewModel
 {
     public class AddressViewModel
     {
+        public Guid AddressId { get; set; }
 
         public string Street { get;  set; }
 
@@ -17,6 +18,6 @@ namespace CustomerMicroService.Application.ViewModel
 
         public string State { get; set; }
 
-        public string Zipcode { get;  set; }
+        public string ZipCode { get;  set; }
     }
 }

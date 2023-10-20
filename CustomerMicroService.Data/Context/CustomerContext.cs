@@ -14,6 +14,8 @@ namespace CustomerMicroService.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CustomerMapping());
+    
+
             base.OnModelCreating(modelBuilder);
         }
     }

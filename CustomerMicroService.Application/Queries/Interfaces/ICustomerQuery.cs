@@ -9,5 +9,6 @@ namespace CustomerMicroService.Application.Queries.Interfaces
     {
         Task<IApplicationResult<DadosPaginadosViewModel<CustomerViewModel>>> GetByFilterAsync(CustomerFilterRequest request);
         Task<IApplicationResult<CustomerViewModel>> GetByIdAsync(Guid customerId);
+        
     }
 }
