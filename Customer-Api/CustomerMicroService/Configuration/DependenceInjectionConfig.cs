@@ -15,6 +15,7 @@ using Polly.Extensions.Http;
 
 namespace CustomerMicroService.API.Configuration
 {
+
     public static class DependenceInjectionConfig
     {
         public static void AddRegisterServices(this IServiceCollection services, IConfiguration configuration)
