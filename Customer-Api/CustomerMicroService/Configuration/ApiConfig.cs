@@ -9,9 +9,12 @@ namespace CustomerMicroService.API.Configuration
         {
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSingleton(new JsonSerializerOptions());
+
+         
+
             return services;
         }
-      
+
     }
 }
 

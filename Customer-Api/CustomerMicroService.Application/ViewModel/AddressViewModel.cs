@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CustomerMicroService.Application.ViewModel
+﻿namespace CustomerMicroService.Application.ViewModel
 {
     public class AddressViewModel
     {
