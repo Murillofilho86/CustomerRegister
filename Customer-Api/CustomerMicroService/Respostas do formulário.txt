@@ -1,0 +1,16 @@
+
+1. A solução deve ser disponibilizada em Cloud ou On-premise?
+   - A escolha entre Cloud e On-premise depende do fluxo de clientes. Se o número de clientes é conhecido ou cresce lentamente, uma aplicação On-premise pode ser apropriada. No entanto, em cenários com picos de acesso significativos, a opção mais recomendada é a Cloud, especialmente devido à sua escalabilidade.
+
+2. Considerando a participação de 4 pessoas técnicas para o desenvolvimento dessa solução, responda qual ferramenta acreditas ser apropriada para o controle de tarefas da equipe, a ferramenta é ágil?
+   - Uma opção simples e de baixo custo seria o Trello. No entanto, considerando a importância de métricas e funcionalidades avançadas, o Azure DevOps é recomendado devido à sua capacidade de oferecer uma solução mais completa e orientada para metodologias ágeis.
+
+3. Você se sente capaz de liderar esta equipe? Por quê?
+Sim, me sinto capaz de liderar esta equipe. Tenho experiência anterior ocupando posições de liderança em equipes e também tentei empreender em um produto voltado para o varejo. Durante esse tempo, participei de dois programas de aceleração nos quais adquiri conhecimentos valiosos sobre liderança e sobre a entrega de projetos que agregam valor ao cliente.
+
+4. Se pudesse sugerir uma melhoria, mudança ou oportunidade. O que seria?
+   - Resposta: Não entendi essa pergunta.
+ 
+
+5. Acha válido esse desafio para o processo que está participando?
+   - Achei o desafio válido, no entanto, considerando meu atual compromisso de trabalho e cursos, achei o prazo de 5 dias corridos um pouco curto para uma entrega ideal.
