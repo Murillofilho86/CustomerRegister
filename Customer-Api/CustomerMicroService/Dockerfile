@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["CustomerMicroService/CustomerMicroService.API.csproj", "CustomerMicroService/"]
 COPY ["CustomerMicroService.Application/CustomerMicroService.Application.csproj", "CustomerMicroService.Application/"]
 COPY ["CustomerMicroService.Core/CustomerMicroService.Framework.csproj", "CustomerMicroService.Core/"]
+COPY ["CustomerMicroService.Data/CustomerMicroService.domain.csproj", "CustomerMicroService.domain/"]
 COPY ["CustomerMicroService.Data/CustomerMicroService.Data.csproj", "CustomerMicroService.Data/"]
 RUN dotnet restore "CustomerMicroService/CustomerMicroService.API.csproj"
 COPY . .

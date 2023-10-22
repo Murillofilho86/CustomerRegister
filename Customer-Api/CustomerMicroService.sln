@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMicroService.Framew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMicroService.Data", "CustomerMicroService.Data\CustomerMicroService.Data.csproj", "{5F6085B5-2116-4059-A801-EC6CE047D0BD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerMicroService.Domain", "CustomerMicroService.Domain\CustomerMicroService.Domain.csproj", "{311ABC79-456B-455C-8096-F1FD276A6397}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5F6085B5-2116-4059-A801-EC6CE047D0BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F6085B5-2116-4059-A801-EC6CE047D0BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F6085B5-2116-4059-A801-EC6CE047D0BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{311ABC79-456B-455C-8096-F1FD276A6397}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{311ABC79-456B-455C-8096-F1FD276A6397}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{311ABC79-456B-455C-8096-F1FD276A6397}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{311ABC79-456B-455C-8096-F1FD276A6397}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
