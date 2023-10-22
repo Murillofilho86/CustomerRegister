@@ -95,11 +95,7 @@ export class HomeComponent implements OnInit {
           ex.error.message
         );
       }
-      // this.alertService.emiteAlertaSimples(
-      //   
-      // )
-
-      //  
+     
 
     );
 

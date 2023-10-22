@@ -8,7 +8,7 @@
 
         public string Number { get;  set; }
 
-        public string Complement { get; set; }
+        public string? Complement { get; set; }
         
         public string Neighborhood { get;  set; }
 
