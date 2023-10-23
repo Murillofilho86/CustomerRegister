@@ -7,8 +7,10 @@ using CustomerMicroService.Data.Repository;
 using CustomerMicroService.Data.Services;
 using CustomerMicroService.Domain.Repository;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Extensions.Http;
@@ -28,25 +30,28 @@ namespace CustomerMicroService.API.Configuration
             }));
 
 
-         
+
+            services.AddFluentValidation();
+
+
             services.AddTransient<IMediator, Mediator>();
 
 
             services.AddScoped<IRequestHandler<CreateCustomerCommand, IActionResult>, CustomerCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateCustomerCommand, IActionResult>, CustomerCommandHandler>();
             services.AddScoped<IRequestHandler<RemoveCustomerCommand, IActionResult>, CustomerCommandHandler>();
-      
+
+ 
 
             services.Configure<BrasilApiOptions>(configuration.GetSection("BrasilApi"));
-
 
             services.AddHttpClient<IBrasilApiService, BrasilApiService>((serviceProvider, httpClient) =>
             {
                 var options = serviceProvider.GetService<IOptions<BrasilApiOptions>>();
 
-                httpClient.BaseAddress = new Uri(options.Value.BaseUrl);
-               
-            }).SetHandlerLifetime(TimeSpan.FromMinutes(5))
+        httpClient.BaseAddress = new Uri(options.Value.BaseUrl);
+
+    }).SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .AddPolicyHandler(HttpPolicyExtensions
                     .HandleTransientHttpError()
                     .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))));

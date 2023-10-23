@@ -8,19 +8,53 @@
           </div>
         </div>
 
-        <form #customerForm="ngForm" (ngSubmit)="onSubmit()" id="customerForm">
+        <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
 
           <div class="row">
-            <div class="col-12">
-              <label for="firstName" class="form-label">Primeiro Nome*:</label>
-              <input id="firstName" name="firstName" type="text" 
-              class="form-control ng-untouched ng-pristine ng-valid"
-                [(ngModel)]="customer.firstName" 
-                #firstName="ngModel" 
-                 required maxlength="150" />
-              <span [hidden]="firstName.valid && (firstName.dirty && firstName.touched) " class="alert alert-danger">
-                Nome é obrigatório.
-              </span>
+            <div class="col-6">
+              <label class="form-label">Primeiro Nome*:</label>
+              <input formControlName="firstName" class="form-control ng-untouched ng-pristine ng-valid" />
+
+              <div
+                *ngIf="customerForm.get('firstName')?.errors && (customerForm.get('firstName')?.touched && customerForm.get('firstName')?.dirty)"
+                class="alert alert-danger">
+                Campo obrigatório.
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="form-label">Sobrenome*:</label>
+              <input formControlName="lastName" class="form-control ng-untouched ng-pristine ng-valid" />
+
+              <div
+                *ngIf="customerForm.get('lastName')?.errors && (customerForm.get('lastName')?.touched && customerForm.get('lastName')?.dirty)"
+                class="alert alert-danger">
+                Campo obrigatório.
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label class="form-label">E-mail*:</label>
+              <input formControlName="email" class="form-control ng-untouched ng-pristine ng-valid" />
+
+              <div
+                *ngIf="customerForm.get('email')?.errors && (customerForm.get('email')?.touched && customerForm.get('email')?.dirty)"
+                class="alert alert-danger">
+                Campo obrigatório.
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="form-label">Telefone*:</label>
+              <input formControlName="phone" class="form-control ng-untouched ng-pristine ng-valid" />
+
+              <div
+                *ngIf="customerForm.get('phone')?.errors && (customerForm.get('phone')?.touched && customerForm.get('phone')?.dirty)"
+                class="alert alert-danger">
+                Campo obrigatório.
+              </div>
             </div>
 
           </div>
@@ -28,43 +62,16 @@
 
           <div class="row">
             <div class="col-12">
-              <label for="lastName" class="form-label">Sobrenome*:</label>
-              <input type="text" class="form-control" name="lastName" [(ngModel)]="customer.lastName"
-                formControlName="lastName" minlength="4" required maxlength="150" />
+              <label class="form-label">CPF*:</label>
+              <input formControlName="cpf" class="form-control ng-untouched ng-pristine ng-valid" />
 
-              <br />
+              <div
+                *ngIf="customerForm.get('cpf')?.errors && (customerForm.get('cpf')?.touched && customerForm.get('cpf')?.dirty)"
+                class="alert alert-danger">
+                Campo obrigatório.
+              </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-12">
-              <label for="email" class="form-label">E-mail*:</label>
-              <input type="text" class="form-control" name="email" name="email" [(ngModel)]="customer.email"
-                formControlName="email" required email maxlength="150" />
-
-            </div>
-          </div>
-
-
-          <div class="row">
-            <div class="col-12">
-              <label for="phone" class="form-label">Telefone*:</label>
-              <input type="text" formControlName="phone" class="form-control" name="phone" name="phone"
-                [(ngModel)]="customer.phone" required pattern="\(\d{2}\)\s\d{4,5}-\d{4}" />
-
-            </div>
-          </div>
-
-
-
-          <div class="row">
-            <div class="col-12">
-              <label for="cpf" class="form-label">CPF*:</label>
-              <input type="text" class="form-control" formControlName="cpf" name="cpf" [(ngModel)]="customer.cpf" cpf
-                cpfAvailable required />
-            </div>
-          </div>
-
 
           <div formGroupName="address">
             <div class="row">
@@ -72,56 +79,97 @@
                 <h5>Endereço:</h5>
               </div>
             </div>
+
             <div class="row">
+
               <div class="col-12 col-md-3">
                 <label for="zipCode" class="form-label">CEP*:</label>
-                <input type="text" class="form-control" formControlName="zipCode" name="zipCode" required
-                  pattern="^[0-9]{5}-[0-9]{3}" #zipCode (blur)="searchAddress(zipCode.value)" />
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" formControlName="zipCode"
+                  #zipCode (blur)="searchAddress(zipCode.value)" name="zipCode" />
 
+                <div
+                  *ngIf="customerForm.get('zipCode')?.errors && (customerForm.get('zipCode')?.touched && customerForm.get('zipCode')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
 
-              <div class="col-12 col-md-7">
-                <label for="street" class="form-label">Logradouro:</label>
-                <input type="text" class="form-control ng-untouched ng-pristine ng-valid"
-                  name="street"
-                   (ngModel)]="customer.address.street.value" required readonly />
-        
+              <div class="col-12 col-md-3">
+                <label for="street" class="form-label">Logradouro*:</label>
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" name="street"
+                  [(ngModel)]="customer.address.street" formControlName="street" name="street" />
+
+                <div
+                  *ngIf="customerForm.get('street')?.errors && (customerForm.get('street')?.touched && customerForm.get('street')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
-              <div class="col-12 col-md-2">
+
+              <div class="col-12 col-md-3">
                 <label for="number" class="form-label">Número*:</label>
-                <input type="text" class="form-control" formControlName="number" name="number" maxlength="10" />
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" formControlName="number"
+                  name="number" />
 
+                <div
+                  *ngIf="customerForm.get('number')?.errors && (customerForm.get('number')?.touched && customerForm.get('number')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
-            </div>
-
-            <div class="row">
 
               <div class="col-12 col-md-3">
                 <label for="complement" class="form-label">Complemento:</label>
-                <input type="text" class="form-control" formControlName="complement" name="complement" maxlength="10" />
+                <input type="text" class="form-control" formControlName="complement" name="complement" />
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-12 col-md-3">
+                <label for="neighborhood" class="form-label">Bairro*:</label>
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" formControlName="neighborhood"
+                  name="neighborhood" />
+
+                <div
+                  *ngIf="customerForm.get('neighborhood')?.errors && (customerForm.get('neighborhood')?.touched && customerForm.get('neighborhood')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
 
               <div class="col-12 col-md-3">
-                <label for="neighborhood" class="form-label">Bairro:</label>
-                <input type="text" formControlName="neighborhood" class="form-control" name="neighborhood" readonly
-                  required />
+                <label for="city" class="form-label">Cidade*:</label>
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" formControlName="city"
+                  name="city" />
+
+                <div
+                  *ngIf="customerForm.get('city')?.errors && (customerForm.get('city')?.touched && customerForm.get('city')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
 
               <div class="col-12 col-md-3">
-                <label for="city" class="form-label">Cidade:</label>
-                <input type="text" class="form-control" formControlName="city" required name="city" />
-              </div>
+                <label for="state" class="form-label">Estado*:</label>
+                <input type="text" class="form-control ng-untouched ng-pristine ng-valid" formControlName="state"
+                  name="state" />
 
-              <div class="col-12 col-md-3">
-                <label for="state" class="form-label">Estado:</label>
-                <input type="text" class="form-control" formControlName="state" name="state" />
-
+                <div
+                  *ngIf="customerForm.get('state')?.errors && (customerForm.get('state')?.touched && customerForm.get('state')?.dirty)"
+                  class="alert alert-danger">
+                  Campo obrigatório.
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12 d-grid gap-2 mt-4 mb-2">
-                <button class="btn btn-lg btn-primary" (click)="onSubmit()" type="submit">Cadastrar-se</button>
-              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 d-grid gap-2 mt-4 mb-2">
+              <button class="btn btn-lg btn-primary" [disabled]="customerForm.invalid"
+                type="submit">Cadastrar-se</button>
             </div>
           </div>
         </form>
