@@ -20,8 +20,8 @@ namespace CustomerMicroService.Application.Commands
 
         public bool IsValid()
         {
-            ValidationResult validationResult = new CreateCustomerValidation().Validate(this);
-            return validationResult.IsValid;
+            ValidationResult = new CreateCustomerValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 

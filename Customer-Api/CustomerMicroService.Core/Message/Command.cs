@@ -5,17 +5,16 @@ namespace CustomerMicroService.Framework.Message
 {
     public abstract class Command : IRequest<ValidationResult>
     {
-        public DateTime Timestemp { get; private set; }
         public ValidationResult ValidationResult { get; set; }
 
-        protected Command()
+        public Command()
         {
-            Timestemp = DateTime.Now;
+            ValidationResult = new ValidationResult();
         }
 
         public virtual bool IsValid()
         {
-            throw new NotImplementedException();
+            return ValidationResult.IsValid;
         }
     }
 }

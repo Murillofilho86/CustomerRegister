@@ -1,6 +1,6 @@
 ﻿namespace CustomerMicroService.Framework.Message
 {
-    public class BaseRequest 
+    public class BaseRequest : Command
     {
         public virtual IDictionary<string, string> DefaultRequestHeaders { get; private set; } = new Dictionary<string, string>();
 

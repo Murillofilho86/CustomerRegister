@@ -35,20 +35,28 @@ namespace CustomerMicroService.API.Controllers
 
         [HttpPost(), Produces("application/json", Type = typeof(IApplicationResult<Guid>))]
         public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
-            => await _mediator.Send(command);
+        {
+            if (!command.IsValid())
+            {
+                return BadRequest(command. ValidationResult.Errors.Select(e => e.ErrorMessage));
+            }
+
+            return Ok(await _mediator.Send(command));
+        }
+            
 
         [HttpPut("{customerId:guid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
         public async Task<IActionResult> Update([FromRoute] Guid customerId, [FromBody] UpdateCustomerCommand command)
         {
             command.CustomerId = customerId;
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete("{customerId:guid}"), Produces("application/json", Type = typeof(IApplicationResult<bool>))]
         public async Task<IActionResult> Delete([FromRoute] Guid customerId, RemoveCustomerCommand command)
         {
             command.CustomerId = customerId;
-            return await _mediator.Send(command);
+            return Ok(await _mediator.Send(command));
         }
 
 
