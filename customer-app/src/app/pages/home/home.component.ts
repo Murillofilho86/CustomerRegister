@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
   // @ts-ignore
   customerForm: FormGroup;
 
-
+// @ts-ignore
+  // @ViewChild('customerForm') customerForm: NgForm;
   constructor(
     private customerService: CustomerService,
     private formBuilder: FormBuilder,
