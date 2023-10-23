@@ -5,6 +5,7 @@ import { NgForm, FormGroup, FormBuilder, Validators, FormControl } from '@angula
 import { Address } from 'src/app/shared/models/Address';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { AlertType } from 'src/app/shared/enum/enum-alerttype';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,24 @@ import { AlertType } from 'src/app/shared/enum/enum-alerttype';
 export class HomeComponent implements OnInit {
 
   // @ts-ignore
-  customerForm: FormGroup;
+  // @ViewChild('customerForm') customerForm: NgForm;
 
+  public customerForm: FormGroup = this.formBuilder.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', Validators.required],
+    cpf: ['', Validators.required],
+    address: this.formBuilder.group({
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      complement: [''],
+      neighborhood: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zipCode: ['', Validators.required],
+    }),
+  });
 
   constructor(
     private customerService: CustomerService,
@@ -41,26 +58,13 @@ export class HomeComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.customerForm = this.formBuilder.group({
-      firstName: [null],
-      lastName: [null],
-      email: [null],
-      phone: [null],
-      cpf: [null],
-      address: this.formBuilder.group({
-        street: [null],
-        number: [null],
-        neighborhood: [null],
-        city: [null],
-        state: [null],
-        zipCode: [null],
-        complement: [null]
-      })
-    });
-  }
+  } 
 
 
-  onSubmit() {
+
+  public onSubmit() {
+
+    if (this.customerForm.valid) {
 
     const data = this.customerForm.value;
     const customer = new Customer(
@@ -76,7 +80,7 @@ export class HomeComponent implements OnInit {
         data.address.city,
         data.address.state,
         data.address.zipCode,
-        data.address.complement
+        data.address.complement,
       )
     )
 
@@ -92,13 +96,14 @@ export class HomeComponent implements OnInit {
         this.alertService.emiteAlertaSimples(
           AlertType.Error,
           'Erro',
-          ex.error.title
+          ex.error.message
         );
       }
      
 
     );
 
+    }
   }
 
   searchAddress(zipeCode: string) {
@@ -114,10 +119,10 @@ export class HomeComponent implements OnInit {
       address: {
         street: data.street,
         number: data.number,
-        complement: data.complement,
         neighborhood: data.neighborhood,
         city: data.city,
         state: data.state,
+        complement: data.complement
       }
     })
   }

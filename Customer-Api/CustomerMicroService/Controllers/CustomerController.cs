@@ -36,11 +36,7 @@ namespace CustomerMicroService.API.Controllers
         [HttpPost(), Produces("application/json", Type = typeof(IApplicationResult<Guid>))]
         public async Task<IActionResult> Post([FromBody] CreateCustomerCommand command)
         {
-            if (!command.IsValid())
-            {
-                return BadRequest(command. ValidationResult.Errors.Select(e => e.ErrorMessage));
-            }
-
+         
             return Ok(await _mediator.Send(command));
         }
             

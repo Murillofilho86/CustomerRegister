@@ -18,11 +18,7 @@ namespace CustomerMicroService.Application.Commands
         public AddressViewModel Address { get; set; }
 
 
-        public bool IsValid()
-        {
-            ValidationResult = new CreateCustomerValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
+    
     }
 
 

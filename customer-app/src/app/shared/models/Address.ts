@@ -6,7 +6,7 @@ export class Address {
         public city: string,
         public state: string,
         public zipCode: string,
-        public complement?: string,
+        public complement?: string
     ) { }
 }
 
