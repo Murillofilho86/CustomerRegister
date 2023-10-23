@@ -49,32 +49,16 @@ export class HomeComponent implements OnInit {
     address: {
       street: '',
       number: '',
-      complement: '',
       neighborhood: '',
       city: '',
       state: '',
-      zipCode: ''
+      zipCode: '',
+      complement: ''
     },
   };
 
   ngOnInit(): void {
-    // this.customerForm = this.formBuilder.group({
-    //   firstName: [null],
-    //   lastName: [null],
-    //   email: [null],
-    //   phone: [null],
-    //   cpf: [null],
-    //   address: this.formBuilder.group({
-    //     street: [null],
-    //     number: [null],
-    //     complement: [null],
-    //     neighborhood: [null],
-    //     city: [null],
-    //     state: [null],
-    //     zipCode: [null],
-    //   })
-    // });
-  }
+  } 
 
 
 
@@ -82,41 +66,42 @@ export class HomeComponent implements OnInit {
 
     if (this.customerForm.valid) {
 
-      const data = this.customerForm.value;
-      const customer = new Customer(
-        data.firstName,
-        data.lastName,
-        data.email,
-        data.phone,
-        data.cpf,
-        new Address(
-          data.address.street,
-          data.address.number,
-          data.address.neighborhood,
-          data.address.city,
-          data.address.state,
-          data.address.zipCode,
-          data.address.complement,
-        )
+    const data = this.customerForm.value;
+    const customer = new Customer(
+      data.firstName,
+      data.lastName,
+      data.email,
+      data.phone,
+      data.cpf,
+      new Address(
+        data.address.street,
+        data.address.number,
+        data.address.complement,
+        data.address.neighborhood,
+        data.address.city,
+        data.address.state,
+        data.address.zipCode
       )
+    )
 
-      this.customerService.postRegisterCustomer(customer).subscribe({
-        next: (result) => {
+    this.customerService.postRegisterCustomer(customer).subscribe(
+      () => {
+        this.alertService.emiteAlertaSimples(
+          AlertType.Success,
+          'Salvo com sucesso',
+          ''
+        );
+        this.customerForm.reset();
+      }, (ex) => {
+        this.alertService.emiteAlertaSimples(
+          AlertType.Error,
+          'Erro',
+          ex.error.message
+        );
+      }
+     
 
-          this.alertService.emiteAlertaSimples(
-            AlertType.Success,
-            'Salvo com sucesso',
-            ''
-          );
-        },
-        error: (err) => {
-          this.alertService.emiteAlertaSimples(
-            AlertType.Error,
-            'Erro',
-            err.error
-          );
-        }
-      });
+    );
 
     }
   }
