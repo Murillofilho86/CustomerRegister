@@ -32,11 +32,11 @@ export class HomeComponent implements OnInit {
     address: {
       street: '',
       number: '',
-      complement: '',
       neighborhood: '',
       city: '',
       state: '',
-      zipCode: ''
+      zipCode: '',
+      complement: ''
     },
   };
 
@@ -50,11 +50,11 @@ export class HomeComponent implements OnInit {
       address: this.formBuilder.group({
         street: [null],
         number: [null],
-        complement: [null],
         neighborhood: [null],
         city: [null],
         state: [null],
         zipCode: [null],
+        complement: [null]
       })
     });
   }
@@ -72,11 +72,11 @@ export class HomeComponent implements OnInit {
       new Address(
         data.address.street,
         data.address.number,
-        data.address.complement,
         data.address.neighborhood,
         data.address.city,
         data.address.state,
-        data.address.zipCode
+        data.address.zipCode,
+        data.address.complement
       )
     )
 
@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
         this.alertService.emiteAlertaSimples(
           AlertType.Error,
           'Erro',
-          ex.error.message
+          ex.error.title
         );
       }
      
