@@ -76,11 +76,11 @@ export class HomeComponent implements OnInit {
       new Address(
         data.address.street,
         data.address.number,
-        data.address.complement,
         data.address.neighborhood,
         data.address.city,
         data.address.state,
-        data.address.zipCode
+        data.address.zipCode,
+        data.address.complement,
       )
     )
 
@@ -119,10 +119,10 @@ export class HomeComponent implements OnInit {
       address: {
         street: data.street,
         number: data.number,
-        complement: data.complement,
         neighborhood: data.neighborhood,
         city: data.city,
         state: data.state,
+        complement: data.complement
       }
     })
   }
